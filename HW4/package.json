@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "bin": {
-    "weather-cli": "main.js"
+    "budget-cli": "first.js",
+    "weather-cli": "second.js"
   },
   "scripts": {
     "start": "node --watch main.js",
