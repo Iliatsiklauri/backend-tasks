@@ -6,3 +6,4 @@ const { commander } = require('commander');
 const program = new Command();
 
 program.Command('show');
+console.log('ilia');
