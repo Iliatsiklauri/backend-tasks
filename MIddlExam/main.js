@@ -44,4 +44,8 @@ program
     console.log(newData);
   });
 
+program.command('reset').action(async () => {
+  await fs.writeFile('data.json', JSON.stringify([]));
+});
+
 program.parse();
