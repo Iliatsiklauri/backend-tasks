@@ -1,9 +1,7 @@
 const express = require('express');
-const apiRouter = require('./api/apiRouter');
+const apiRouter = require('./api/apiRoute');
 const app = express();
 const PORT = 3000;
-
-app.set('view engine', 'ejs');
 
 app.use('/', apiRouter);
 
