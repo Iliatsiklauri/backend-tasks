@@ -1,4 +1,3 @@
-const e = require('express');
 const { Router } = require('express');
 const { readData } = require('../service/readData');
 const writeData = require('../service/writeData');
