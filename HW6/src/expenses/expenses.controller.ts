@@ -6,6 +6,6 @@ export class ExpensesController {
   constructor(private expensesService: ExpensesService) {}
   @Get()
   Gethello() {
-    return this.expensesService.getHello();
+    return this.expensesService.getFull();
   }
 }

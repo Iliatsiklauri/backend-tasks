@@ -28,7 +28,7 @@ export class ExpensesService {
       cost: 50,
     },
   ];
-  getHello() {
+  getFull() {
     return this.expenses;
   }
 }
