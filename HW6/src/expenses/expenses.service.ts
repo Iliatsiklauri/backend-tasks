@@ -24,8 +24,14 @@ export class ExpensesService {
     {
       id: 3,
       name: 'saba',
-      category: 'date',
+      category: 'zmanebi',
       cost: 50,
+    },
+    {
+      id: 4,
+      name: 'little davit',
+      category: 'funikuliori date',
+      cost: 120,
     },
   ];
   getFull() {
