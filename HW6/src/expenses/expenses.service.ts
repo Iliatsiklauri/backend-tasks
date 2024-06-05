@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ExpenseIntf, UserDTO } from './expenses.interface';
+import { CLIENT_RENEG_LIMIT } from 'tls';
 
 @Injectable()
 export class ExpensesService {
@@ -56,7 +57,16 @@ export class ExpensesService {
     const newArr = this.expenses.filter((el) => el.id !== Number(id));
     this.expenses = newArr;
   }
-  editExoense(id) {
-    const obj = this.expenses.find((el) => el.id === Number(id));
+  editExoense(id, body: UserDTO) {
+    let target = this.expenses.find((el) => el.id === Number(id));
+    const obj = {
+      id,
+      category: body.category,
+      cost: body.cost,
+    };
+    this.expenses.forEach((el) => {
+      el.id === id ? (el = obj) : null;
+    });
+    return this.expenses;
   }
 }

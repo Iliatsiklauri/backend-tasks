@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { UserDTO } from './expenses.interface';
 
@@ -21,5 +29,9 @@ export class ExpensesController {
   @Delete('/:id')
   deleteExpense(@Param() params) {
     return this.expensesService.deleteExpense(params.id);
+  }
+  @Patch('/:id')
+  editExpense(@Param() params, @Body() body: UserDTO) {
+    return this.expensesService.editExoense(params.id, body);
   }
 }
