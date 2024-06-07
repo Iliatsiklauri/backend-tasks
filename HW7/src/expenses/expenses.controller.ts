@@ -4,34 +4,42 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
-import { UserDTO } from './expenses.interface';
+import { UserDTO } from './expenses.dto';
+import { CLIENT_RENEG_LIMIT } from 'tls';
 
 @Controller('expenses')
 export class ExpensesController {
   constructor(private expensesService: ExpensesService) {}
+
   @Get()
-  Gethello() {
+  Gethello(@Query() param) {
+    console.log(param);
     return this.expensesService.getFull();
   }
+
   @Get('/:id')
   GetById(@Param() params) {
-    return this.expensesService.getById(params.id);
+    return this.expensesService.getById(Number(params.id));
   }
+
   @Post()
   AddExpense(@Body() body: UserDTO) {
     return this.expensesService.AddExpense(body);
   }
 
   @Delete('/:id')
-  deleteExpense(@Param() params) {
-    return this.expensesService.deleteExpense(params.id);
+  deleteExpense(@Param('id', ParseIntPipe) id) {
+    return this.expensesService.deleteExpense(id);
   }
+
   @Patch('/:id')
-  editExpense(@Param() params, @Body() body: UserDTO) {
-    return this.expensesService.editExoense(params.id, body);
+  editExpense(@Param('id', ParseIntPipe) id, @Body() body: UserDTO) {
+    return this.expensesService.editExpense(id, body);
   }
 }

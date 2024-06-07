@@ -28,6 +28,7 @@ export class ExpensesService {
   getAllExpenses(): IExpenses[] {
     return this.expenses;
   }
+  
   createExpense(expense: ExpensesDTO): IExpenses {
     if (!expense.price || !expense.category!)
       throw new HttpException(
