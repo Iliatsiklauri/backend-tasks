@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   Param,
   ParseIntPipe,
   Post,
@@ -16,8 +17,8 @@ import { userDTO } from './products.dto';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
   @Get()
-  getAll(@Query() body: userDTO) {
-    return this.productsService.getAll(body);
+  getAll(@Query() body: userDTO, @Headers('api-key') key: string) {
+    return this.productsService.getAll(body, key);
   }
   @Get('/:id')
   getById(@Param('id', ParseIntPipe) id) {

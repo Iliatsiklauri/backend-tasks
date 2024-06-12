@@ -4,6 +4,7 @@ import { userDTO } from './products.dto';
 
 @Injectable()
 export class ProductsService {
+  private passcode = '1234';
   private products: products[] = [
     {
       id: 0,
@@ -21,7 +22,12 @@ export class ProductsService {
     },
   ];
 
-  getAll(body?: Partial<userDTO>) {
+  getAll(body?: Partial<userDTO>, key?: string) {
+    if (key !== this.passcode)
+      throw new HttpException(
+        'api key is not correct or is missing',
+        HttpStatus.BAD_REQUEST,
+      );
     let filtered = this.products;
     if (body) {
       if (body.name) {
