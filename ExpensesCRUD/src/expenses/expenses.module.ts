@@ -1,15 +1,9 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
-import { ExpensesService } from './expenses.service';
+import { Module } from '@nestjs/common';
 import { ExpensesController } from './expenses.controller';
-import { LoggerMiddleware } from './logger.middleware';
+import { ExpensesService } from './expenses.service';
 
 @Module({
-  providers: [ExpensesService],
   controllers: [ExpensesController],
+  providers: [ExpensesService]
 })
 export class ExpensesModule {}
