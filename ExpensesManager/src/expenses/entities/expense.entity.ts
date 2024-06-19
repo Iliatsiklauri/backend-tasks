@@ -1,11 +1,13 @@
+import { NestFactory } from '@nestjs/core';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
 @Schema({ timestamps: true })
 export class Expense {
-  @Prop({ required: true })
+  @Prop()
   name: string;
-  @Prop({ required: true })
+  @Prop()
   category: string;
-  @Prop({ required: true })
+  @Prop()
   cost: number;
 }
 export const ExpenseSchema = SchemaFactory.createForClass(Expense);
