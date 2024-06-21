@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+body{
+  background: lightslategray;
+  padding: 10px;
+}
+.parent{
+  display: grid;
+  grid-template-columns: repeat(2,auto);
+ 
+  gap: 10px;
+}
+.expense-wrapper{
+  border: 2px solid black;
+  width: 100%;
+  background:darkgray;
+  padding: 2%;
+  position: relative;
+}
+h4{
+  align-self: end;
+float: right;
+}
+button{
+position: absolute;
+top:10px;
+right: 10px;
+width: 80px;
+height: 30px;
+background:red;
+cursor: pointer;
+}
+  </style>
+  </head>
+  <body>
+    <div class="parent">
+      <% Expense.map(el => { %>
+      <div class="expense-wrapper">
+        <h1>Name : <%= el.name%></h1>
+        <h3>Cost: <%= el.cost %> $</h3>
+        <h3>Category: <%= el.category %></h3>
+        <h4><%= el.createdAt %></h4>
+        <button class="delete-btn" data-id="<%= el._id %>">delete</button>
+      </div>
+      <% }); %>
+    </div>
+    <script>
+      const btn = document.querySelectorAll("button")
+           btn.forEach(button => {
+            const expenseId = button.dataset.id;
+           button.addEventListener('click',async  () => {
+            try{
+              const response  = await fetch(`/expenses/${expenseId}`,{
+                method: "DELETE",
+                headers: {
+              'Content-Type': 'application/json'
+            }
+              })
+              if(response.ok){
+                console.log("expense succesfully deleted");
+              }
+            }catch(er){
+              console.log(er);
+            }
+          });
+          });
+    </script>
+  </body>
+</html>

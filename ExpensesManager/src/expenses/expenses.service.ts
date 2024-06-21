@@ -15,15 +15,22 @@ export class ExpensesService implements OnModuleInit {
   onModuleInit() {}
 
   create(createExpenseDto: CreateExpenseDto) {
-    return null;
+    return this.ExpenseModel.create(createExpenseDto);
   }
 
   findAll(query: queryParams) {
     const page = query.page || 1;
     const perPage = query.perPage || 20;
-    return this.ExpenseModel.find()
+    return this.ExpenseModel.find({ cost: { $gt: 100 } })
       .skip((page - 1) * perPage)
       .limit(perPage);
+  }
+
+  filter(cost: number) {
+    if (!cost) {
+      return this.ExpenseModel.find();
+    }
+    return this.ExpenseModel.find({ cost }).countDocuments();
   }
 
   findOne(id: string) {
@@ -31,7 +38,7 @@ export class ExpensesService implements OnModuleInit {
   }
 
   update(id: string, updateExpenseDto: UpdateExpenseDto) {
-    return `This action updates a #${id} expense`;
+    return this.ExpenseModel.findByIdAndUpdate(id, updateExpenseDto);
   }
 
   remove(id: string) {
