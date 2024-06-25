@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
-import { PostModule } from './post/post.module';
+import { ExpensesModule } from './expenses/expenses.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
@@ -8,8 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URI),
-    UserModule,
-    PostModule,
+    ExpensesModule,
   ],
   controllers: [],
   providers: [],
