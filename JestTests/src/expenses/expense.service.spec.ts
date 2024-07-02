@@ -23,7 +23,7 @@ describe('ExpensesService', () => {
   };
   const incompleteExpenseMock = {
     name: 'ilia',
-    category: 'some',
+    cost: 999,
   };
   const mockExpensemodel = {
     findById: jest.fn(),
@@ -109,6 +109,7 @@ describe('ExpensesService', () => {
       );
     });
   });
+
   describe('create', () => {
     it('should create user', async () => {
       jest.spyOn(ExpenseModel, 'create').mockResolvedValue(expenseMock as any);
@@ -117,11 +118,12 @@ describe('ExpensesService', () => {
     });
 
     it('should throw error when passed incomplete expense', async () => {
-      const res = async () =>
-        await service.create(incompleteExpenseMock as any);
-      await expect(res).rejects.toThrow(BadRequestException);
+      await expect(
+        async () => await service.create(incompleteExpenseMock as any),
+      ).rejects.toThrow(BadRequestException);
     });
   });
+
   describe('findAndUpdate', () => {
     it('should find and update if given correct key and correct id', async () => {
       jest.spyOn(ExpenseModel, 'findById').mockResolvedValue(expenseMock);

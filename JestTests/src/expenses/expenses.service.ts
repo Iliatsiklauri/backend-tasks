@@ -14,15 +14,6 @@ import { Expense } from './entities/expense.entity';
 import { Model, isValidObjectId } from 'mongoose';
 import { ExpensesModule } from './expenses.module';
 
-export function checkExpense(createExpenseDto: CreateExpenseDto) {
-  if (
-    !createExpenseDto.name ||
-    !createExpenseDto.category ||
-    !createExpenseDto.cost
-  ) {
-    throw new BadRequestException('incomplete expense');
-  }
-}
 @Injectable()
 export class ExpensesService implements OnModuleInit {
   constructor(
@@ -31,7 +22,13 @@ export class ExpensesService implements OnModuleInit {
   onModuleInit() {}
 
   create(createExpenseDto: CreateExpenseDto) {
-    checkExpense(createExpenseDto);
+    if (
+      !createExpenseDto.name ||
+      !createExpenseDto.category ||
+      !createExpenseDto.cost
+    ) {
+      throw new BadRequestException('incomplete expense');
+    }
     return this.ExpenseModel.create(createExpenseDto);
   }
   findAll() {
