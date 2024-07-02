@@ -1,6 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
 
-export class CreateExpenseDto extends Document {
+export class CreateExpenseDto {
   @IsString()
   name: string;
   @IsString()
