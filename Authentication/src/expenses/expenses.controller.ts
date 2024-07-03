@@ -37,8 +37,8 @@ export class ExpensesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.expensesService.findOne(+id);
+  findOne(@Param('id') id) {
+    return this.expensesService.findOne(id);
   }
 
   @Patch(':id')
@@ -47,7 +47,7 @@ export class ExpensesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.expensesService.remove(+id);
+  remove(@Param('id') id) {
+    return this.expensesService.remove(id);
   }
 }

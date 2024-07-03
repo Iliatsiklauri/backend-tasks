@@ -9,6 +9,7 @@ import { currentUser } from 'src/users/dto/current-user.dto';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
   @Post('sign-up')
   signUp(@Body() CreateUserDto: SignUpDto) {
     return this.authService.SignUp(CreateUserDto);

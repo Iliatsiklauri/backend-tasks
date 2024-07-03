@@ -15,6 +15,7 @@ export class AuthService {
     private usersServise: UsersService,
     private JwtService: JwtService,
   ) {}
+
   async SignUp(CreateUserDto: SignUpDto) {
     const { email, password } = CreateUserDto;
     const existingUser = await this.usersServise.findByEmail(email);
@@ -23,14 +24,15 @@ export class AuthService {
     const hashedPassoword = await bcrypt.hash(password, 10);
     await this.usersServise.create({ email, password: hashedPassoword });
 
-    return 'uses created succesfully';
+    return 'user created succesfully';
   }
+
   async signIn(SignInDto: SignInDto) {
     const { email, password } = SignInDto;
     const existingUser = await this.usersServise.findByEmail(email);
+    if (!existingUser) throw new BadRequestException('User is not registered');
 
     const isPassEqual = await bcrypt.compare(password, existingUser.password);
-    if (!existingUser) throw new BadRequestException('User is not registered');
     if (!isPassEqual) throw new UnauthorizedException('incorrect password');
 
     const jwtpPayload = {

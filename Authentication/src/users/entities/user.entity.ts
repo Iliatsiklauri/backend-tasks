@@ -8,7 +8,7 @@ export class User {
   email: string;
   @Prop({ required: true, select: false })
   password: string;
-  @Prop()
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Expense' })
   expenses: [mongoose.Schema.Types.ObjectId];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

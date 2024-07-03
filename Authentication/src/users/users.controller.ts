@@ -24,7 +24,10 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Get()
   findAll() {
-    return this.usersService.findAll();
+    return this.usersService.findAll().populate({
+      path: 'expenses',
+      select: 'title cost',
+    });
   }
 
   @Get(':id')
