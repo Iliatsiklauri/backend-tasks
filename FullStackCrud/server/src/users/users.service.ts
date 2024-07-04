@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -10,6 +10,8 @@ import { ExpensesService } from 'src/expenses/expenses.service';
 export class UsersService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
+    @Inject(forwardRef(() => ExpensesService))
+    private ExpensesService: ExpensesService,
   ) {}
   create(createUserDto: CreateUserDto) {
     return this.userModel.create(createUserDto);
@@ -19,8 +21,8 @@ export class UsersService {
     return this.userModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id) {
+    return this.userModel.findById(id);
   }
 
   findByEmail(email: string) {
@@ -33,9 +35,6 @@ export class UsersService {
     return `This action updates a #${id} user`;
   }
 
-  remove(id) {
-    return this.userModel.findByIdAndDelete(id);
-  }
   async addPost(
     userId: mongoose.Schema.Types.ObjectId,
     expenseId: mongoose.Schema.Types.ObjectId,
@@ -43,5 +42,10 @@ export class UsersService {
     const user = await this.userModel.findById(userId);
     user.expenses.push(expenseId);
     await user.save();
+  }
+
+  async remove(id) {
+    await this.ExpensesService.reset(id);
+    return this.userModel.findByIdAndDelete(id);
   }
 }

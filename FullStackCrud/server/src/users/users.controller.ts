@@ -24,15 +24,15 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Get()
   findAll() {
-    return this.usersService.findAll().populate({
-      path: 'expenses',
-      select: 'title cost',
-    });
+    return this.usersService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOne(id).populate({
+      path: 'expenses',
+      select: 'title cost userId',
+    });
   }
 
   @Patch(':id')
@@ -41,7 +41,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
 }

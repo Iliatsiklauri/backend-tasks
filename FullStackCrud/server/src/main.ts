@@ -6,7 +6,7 @@ import * as morgan from 'morgan';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  app.use(morgan('tiny'));
+  // app.use(morgan('tiny'));
   app.enableCors();
   await app.listen(4000);
 }

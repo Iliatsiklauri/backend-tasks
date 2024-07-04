@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { Expense } from './entities/expense.entity';
@@ -11,6 +11,7 @@ import { UsersService } from 'src/users/users.service';
 export class ExpensesService {
   constructor(
     @InjectModel(Expense.name) private ExpenseModel: Model<Expense>,
+    @Inject(forwardRef(() => UsersService))
     private usersService: UsersService,
   ) {}
   async create(createExpenseDto: CreateExpenseDto, currentUser: currentUser) {
@@ -37,5 +38,8 @@ export class ExpensesService {
 
   async remove(id) {
     await this.ExpenseModel.findByIdAndDelete(id);
+  }
+  async reset(id) {
+    await this.ExpenseModel.deleteMany({ userId: id });
   }
 }
