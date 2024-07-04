@@ -33,8 +33,8 @@ export class UsersService {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id) {
+    return this.userModel.findByIdAndDelete(id);
   }
   async addPost(
     userId: mongoose.Schema.Types.ObjectId,

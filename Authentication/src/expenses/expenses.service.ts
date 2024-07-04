@@ -31,11 +31,11 @@ export class ExpensesService {
     return target;
   }
 
-  update(id: number, updateExpenseDto: UpdateExpenseDto) {
-    return `This action updates a #${id} expense`;
+  update(id: string, updateExpenseDto: UpdateExpenseDto) {
+    return this.ExpenseModel.findByIdAndUpdate(id, updateExpenseDto);
   }
 
-  async remove(id: number) {
+  async remove(id) {
     await this.ExpenseModel.findByIdAndDelete(id);
   }
 }

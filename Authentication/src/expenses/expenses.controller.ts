@@ -43,11 +43,11 @@ export class ExpensesController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateExpenseDto: UpdateExpenseDto) {
-    return this.expensesService.update(+id, updateExpenseDto);
+    return this.expensesService.update(id, updateExpenseDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id) {
+  remove(@Param('id') id, @CurrentUser() currentUser: currentUser) {
     return this.expensesService.remove(id);
   }
 }
