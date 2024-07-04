@@ -28,7 +28,7 @@ export default function LoginModal() {
     });
     const data = await response.json();
     setCookie('cookie', data.accessToken);
-    // if (response.ok) router.push('/');
+    if (response.ok) router.push('/');
   };
   console.log(window.location.href.split('/')[3]);
 
