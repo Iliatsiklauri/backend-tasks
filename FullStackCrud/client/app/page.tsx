@@ -1,9 +1,9 @@
-import LoginModal from './components/LoginModal/LoginModal';
+import AuthModal from './components/AuthModal/AuthModal';
 
 export default function Home() {
   return (
     <div className="w-full min-h-screen bg-slate-600 flex items-center justify-center">
-      <LoginModal />
+      <AuthModal />
     </div>
   );
 }
