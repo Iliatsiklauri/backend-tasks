@@ -29,7 +29,15 @@ export default function SingleExpenseBox({
   }
   return (
     <div className="">
-      {modal ? <EditModal modal={modal} setModal={setModal} /> : null}
+      {modal ? (
+        <EditModal
+          modal={modal}
+          setModal={setModal}
+          id={data._id}
+          click={click}
+          setClick={setClick}
+        />
+      ) : null}
       <div className="bg-slate-400 h-[200px] relative p-5 flex flex-col items-start justify-center gap-4">
         <p className="text-[17px] font-medium">
           <span className="font-bold">title: </span>

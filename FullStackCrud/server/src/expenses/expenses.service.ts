@@ -32,8 +32,9 @@ export class ExpensesService {
     return target;
   }
 
-  update(id: string, updateExpenseDto: UpdateExpenseDto) {
-    return this.ExpenseModel.findByIdAndUpdate(id, updateExpenseDto);
+  async update(id: string, updateExpenseDto: UpdateExpenseDto) {
+    const obj = await this.ExpenseModel.findByIdAndUpdate(id, updateExpenseDto);
+    return obj;
   }
 
   async remove(id) {

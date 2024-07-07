@@ -3,21 +3,52 @@ import React, { useState } from 'react';
 export default function EditModal({
   setModal,
   modal,
+  id,
+  click,
+  setClick,
 }: {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   modal: boolean;
+  id: string;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+  click: boolean;
 }) {
-  const [info, setInfo] = useState<{}>({});
-  const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setInfo({
-      ...info,
-      [name]: name === 'cost' ? Number(value) : value,
-    });
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [cost, setCost] = useState<number | string>('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const updatedFields: { [key: string]: any } = {};
+
+    if (title) updatedFields.title = title;
+    if (desc) updatedFields.desc = desc;
+    if (cost) updatedFields.cost = cost;
+
+    if (Object.keys(updatedFields).length > 0) {
+      fetch(`http://localhost:4000/expenses/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(updatedFields),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setModal(false);
+          setClick(!click);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+
+    setCost('');
+    setTitle('');
+    setDesc('');
   };
-  const handleSubmit = {
-    console.log(info);
-  }
   return (
     <div
       className={`absolute w-full h-full  top-0 left-0 flex items-center justify-center 
@@ -30,7 +61,10 @@ export default function EditModal({
             setModal(false);
           }}
         ></div>
-        <form className="w-[400px] h-[300px] gap-2 z-50  rounded-xl relative flex flex-col items-center p-3 justify-center bg-slate-500">
+        <form
+          className="w-[400px] h-[300px] gap-2 z-50  rounded-xl relative flex flex-col items-center p-3 justify-center bg-slate-500"
+          onSubmit={handleSubmit}
+        >
           <div
             className="text-2xl absolute top-4 right-4 bg-red-700 px-2 cursor-pointer"
             onClick={() => setModal(false)}
@@ -43,9 +77,9 @@ export default function EditModal({
               <input
                 type="text"
                 id="title"
-                onChange={HandleChange}
+                onChange={(e) => setTitle(e.target.value)}
                 name="title"
-                value={info.title}
+                value={title}
               />
             </div>
           </div>
@@ -55,9 +89,9 @@ export default function EditModal({
               <input
                 type="text"
                 id="description"
-                onChange={HandleChange}
+                onChange={(e) => setDesc(e.target.value)}
                 name="description"
-                value={info.description}
+                value={desc}
               />
             </div>
           </div>
@@ -67,9 +101,9 @@ export default function EditModal({
               <input
                 type="number"
                 id="cost"
-                onChange={HandleChange}
+                onChange={(e) => setCost(Number(e.target.value))}
                 name="cost"
-                value={info.cost}
+                value={cost}
               />
             </div>
           </div>

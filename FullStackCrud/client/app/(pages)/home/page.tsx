@@ -4,7 +4,7 @@ import Header from '@/app/components/header/Header';
 import SingleExpenseBox from '@/app/components/SingleExpense/SingleExpenseBox';
 import React, { useEffect, useState } from 'react';
 
-export default function page() {
+export default function Page() {
   const [realData, setData] = useState<any[]>([]);
   const [click, setClick] = useState(false);
   const [id, setId] = useState(null);
