@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import mongoose, { Model, Mongoose } from 'mongoose';
 import { ExpensesService } from 'src/expenses/expenses.service';
+import { findIndex } from 'rxjs';
 
 @Injectable()
 export class UsersService {
@@ -47,5 +48,11 @@ export class UsersService {
   async remove(id) {
     await this.ExpensesService.reset(id);
     return this.userModel.findByIdAndDelete(id);
+  }
+  async removeFromParent(id) {
+    const obj = await this.userModel.findOne({ expenses: id });
+    const index = obj.expenses.findIndex((el) => el == id);
+    obj.expenses.splice(index, 1);
+    return obj.save();
   }
 }

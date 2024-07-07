@@ -27,11 +27,12 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id).populate({
       path: 'expenses',
-      select: 'title cost userId',
+      select: 'title cost userId description',
     });
   }
 

@@ -38,6 +38,7 @@ export class ExpensesService {
 
   async remove(id) {
     await this.ExpenseModel.findByIdAndDelete(id);
+    return this.usersService.removeFromParent(id);
   }
   async reset(id) {
     await this.ExpenseModel.deleteMany({ userId: id });
